@@ -1,19 +1,14 @@
 version: '3'
-x-postgres:
-  &postgres-common
-  image: "ankane/pgvector:v0.5.1"
-  user: postgres
-  healthcheck:
-    test: "exit 0"
-    interval: 2s
-    timeout: 12s
-    retries: 3
-
-
 services:
   postgres:
-    <<: *postgres-common
+    image: "ankane/pgvector:v0.5.1"
+    user: postgres
     container_name: "omnivore-postgres"
+    healthcheck:
+      test: "exit 0"
+      interval: 2s
+      timeout: 12s
+      retries: 3
     expose:
       - 5432
     ports:
@@ -34,8 +29,14 @@ services:
       -c hot_standby_feedback=on
 
   postgres-replica:
-    <<: *postgres-common
+    image: "ankane/pgvector:v0.5.1"
+    user: postgres
     container_name: "omnivore-postgres-replica"
+    healthcheck:
+      test: "exit 0"
+      interval: 2s
+      timeout: 12s
+      retries: 3
     expose:
       - 5433
     ports:
@@ -62,7 +63,7 @@ services:
       context: .
       dockerfile: ./packages/db/Dockerfile
     container_name: "omnivore-migrate"
-    command: '/bin/sh ./packages/db/setup.sh' # Also create a demo user with email: demo@omnivore.app, password: demo_password
+    command: '/bin/sh ./packages/db/setup.sh'
     environment:
       - PGPASSWORD=postgres
       - POSTGRES_USER=postgres
@@ -103,7 +104,7 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
-        
+
   web:
     build:
       context: ../../
