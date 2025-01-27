@@ -103,11 +103,11 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
-
+        
   web:
     build:
-      context: .
-      dockerfile: ./packages/web/Dockerfile
+      context: ../../
+      dockerfile: ./packages/web/Dockerfile-self
       args:
         - APP_ENV=prod
         - BASE_URL=http://localhost:3000
