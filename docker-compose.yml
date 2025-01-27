@@ -68,7 +68,7 @@ services:
       - PGPASSWORD=postgres
       - POSTGRES_USER=postgres
       - PG_HOST=postgres
-      - PG_PASSWORD=app_pass
+      - PG_PASSWORD=postgres
       - PG_DB=omnivore
     depends_on:
       postgres:
@@ -88,8 +88,8 @@ services:
     environment:
       - API_ENV=local
       - PG_HOST=postgres
-      - PG_USER=app_user
-      - PG_PASSWORD=app_pass
+      - PG_USER=postgres
+      - PG_PASSWORD=postgres
       - PG_DB=omnivore
       - PG_PORT=5432
       - PG_POOL_MAX=20
